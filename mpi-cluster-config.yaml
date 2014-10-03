@@ -59,7 +59,7 @@ actions:
     commands: [
 #     Assuming mpiuser exists (add block to create if not)
       "usermod -d /home/shared -m mpiuser",
-      "runuser -l mpiuser -c 'ssh-keygen -t dsa -f /home/shared/.ssh/id_rsa -P \"\"'",
+      "runuser -l mpiuser -c 'ssh-keygen -t rsa -f /home/shared/.ssh/id_rsa -P \"\"'",
       "runuser -l mpiuser -c 'cat /home/shared/.ssh/id_rsa.pub >> /home/shared/.ssh/authorized_keys'",
       "chmod 700 /home/shared/.ssh",
       "chmod 600 /home/shared/.ssh/authorized_keys",
