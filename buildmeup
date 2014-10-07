@@ -1,0 +1,4 @@
+#!/bin/bash
+gcloud compute instances create head-node --image mpi-node --zone europe-west1-a
+gcloud compute instances create mpi-node --image mpi-node --zone europe-west1-a
+

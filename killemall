@@ -1,0 +1,4 @@
+#!/bin/bash
+gcloud compute instances delete head-node --zone europe-west1-a
+gcloud compute instances delete mpi-node --zone europe-west1-a
+

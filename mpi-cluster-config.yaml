@@ -1,6 +1,6 @@
 name: mpi-cluster
 modules:
-  head-node:
+  mhead-node:
     type: REPLICA_POOL
     replicaPoolModule:
       numReplicas: 1
@@ -27,10 +27,10 @@ modules:
 #          value: 8080
 #        VERSION:
 #          value: 10.2
-  compute-node:
+  mcompute-node:
     type: REPLICA_POOL
     replicaPoolModule:
-      numReplicas: 1
+      numReplicas: 2
       replicaPoolParams:
         v1beta1:
           machineType: n1-standard-1
@@ -59,14 +59,21 @@ actions:
     commands: [
 #     Assuming mpiuser exists (add block to create if not)
       "usermod -d /home/shared -m mpiuser",
+      "touch /tmp/f1",
       "runuser -l mpiuser -c 'ssh-keygen -t dsa -f /home/shared/.ssh/id_rsa -P \"\"'",
+      "touch /tmp/f2",
       "runuser -l mpiuser -c 'cat /home/shared/.ssh/id_rsa.pub >> /home/shared/.ssh/authorized_keys'",
+      "touch /tmp/f3",
       "chmod 700 /home/shared/.ssh",
+      "touch /tmp/f4",
       "chmod 600 /home/shared/.ssh/authorized_keys",
+      "touch /tmp/f5",
 
 #      The wildcard below should be replaces with a subnet
-      "echo '/home/shared *(rw,sync)' | sudo tee -a /etc/exports",
+      #"sudo echo '/home/shared *(rw,sync)' | sudo tee -a /etc/exports",
+      #"touch /tmp/f6",
       "/bin/systemctl start nfs.service",
+      "touch /tmp/f7",
     ]
 
 #   configure-nfs-client:
