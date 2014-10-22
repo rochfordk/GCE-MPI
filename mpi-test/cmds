@@ -1,0 +1,9 @@
+cc mpi-host-test.c -o mpi-host-test
+   24  mpiexec -n 1 mpi-host-test
+   25  ls
+   26  mpiexec -n 1 ./mpi-host-test
+   27  mpiexec -n 2 ./mpi-host-test
+   28  mpiexec -n 2 -f ./machinefile ./mpi-host-test
+   29  mpiexec -n 6 -f ./machinefile ./mpi-host-test
+   30  mpiexec -n 16 -f ./machinefile ./mpi-host-test
+
