@@ -1,4 +1,6 @@
 #!/bin/bash
-gcloud compute instances create head-node --image mpi-node --zone europe-west1-a
-gcloud compute instances create mpi-node --image mpi-node --zone europe-west1-a
+gcloud compute instances create head-node --image mpi-image --zone europe-west1-a --metadata-from-file startup-script=head-startup-script.sh
+gcloud compute instances create mpi-node --image mpi-image --zone europe-west1-a --no-address --metadata-from-file startup-script=node-startup-script.sh
+
+#--metadata-from-file startup-script=install-apache.sh
 
