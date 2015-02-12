@@ -1,5 +1,6 @@
 #node startup script
 #!/bin/bash
+echo "Executing startup script for cluster node"
 mkdir /home/shared
 chown mpiuser:mpiuser /home/shared
 chmod 740 /home/shared

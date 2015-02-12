@@ -1,6 +1,9 @@
 #!/bin/bash
-gcloud compute instances create head-node --image mpi-image --zone europe-west1-a --metadata-from-file startup-script=head-startup-script.sh
-gcloud compute instances create mpi-node --image mpi-image --zone europe-west1-a --no-address --metadata-from-file startup-script=node-startup-script.sh
+gcloud compute instances create head-node --image mpi-image --machine-type n1-standard-1 --zone europe-west1-c --metadata-from-file startup-script=head-startup-script.sh
+gcloud compute instances create mpi-node01 --image mpi-image --machine-type n1-highcpu-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+gcloud compute instances create mpi-node02 --image mpi-image --machine-type n1-highcpu-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+
 
 #--metadata-from-file startup-script=install-apache.sh
-
+# zone europe-west1-b is SandyBridge
+# zone europe-west1-c is IvyBridge

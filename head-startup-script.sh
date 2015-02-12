@@ -1,5 +1,6 @@
 #head startup script
 #!/bin/bash
+echo "Executing startup script for cluster head node"
 usermod -d /home/shared -m mpiuser
 chmod 740 /home/shared
 runuser -l mpiuser -c 'ssh-keygen -t rsa -f /home/shared/.ssh/id_rsa -P ""'
