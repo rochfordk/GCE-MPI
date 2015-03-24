@@ -1,0 +1,43 @@
+# dependencies
+yum install wget
+mkir benchmarks
+cd benchmarks
+mkdir Recycle
+
+# iPERF
+wget https://iperf.fr/download/iperf_2.0.5/iperf_2.0.5-2_amd64 ; chmod +x iperf_2.0.5-2_amd64 ; sudo mv iperf_2.0.5-2_amd64 /usr/bin/iperf
+
+# FIO
+wget http://freecode.com/urls/3aa21b8c106cab742bf1f20d60629e3f
+tar -zxf 3aa21b8c106cab742bf1f20d60629e3f 
+cd fio-2.1.10/
+./configure && make && sudo make install
+cd ..
+mv 3aa21b8c106cab742bf1f20d60629e3f Recycle/
+
+# unixbench
+wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
+tar -zxf UnixBench5.1.3.tgz 
+mv UnixBench5.1.3.tgz Recycle/
+
+# Sockperf
+wget https://sockperf.googlecode.com/files/sockperf-2.5.241.tar.gz
+cd sockperf-2.5.241/
+./configure && make && sudo make install
+cd ..
+mv sockperf-2.5.241.tar.gz Recycle/
+
+# Sysbench
+yum install http://www.percona.com/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
+yum install sysbench
+
+# IOmeter - http://sourceforge.net/projects/iometer/?source=typ_redirect
+
+# IOzone
+wget http://www.iozone.org/src/current/iozone3_430.tar
+tar -xf iozone3_430.tar
+mv iozone3_430.tar Recycle/ 
+cd iozone3_430/src/current/
+make linux-AMD64
+
+

@@ -1,0 +1,53 @@
+
+
+vistara acount for NOC
+rh account for NE
+
+Training - schedule
+
+gcloud compute instances create newest-head-node --image head-node-benchmark01 --machine-type n1-standard-1 --zone europe-west1-c --metadata-from-file startup-script=head-startup-script.sh	(this will create the /home/shared directory)
+
+gcloud compute instances create newer-head-node --image mph-head --machine-type n1-standard-1 --zone europe-west1-c --metadata-from-file startup-script=head-startup-script.sh		(this will create the /home/shared directory)
+
+gcloud compute instances create old-head-node --image mpi-node --machine-type n1-standard-1 --zone europe-west1-c --metadata-from-file startup-script=head-startup-script.sh
+
+gcloud compute instances create mpi-node01 --image mpi-image --machine-type n1-standard-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+gcloud compute instances create mpi-node02 --image mpi-image --machine-type n1-standard-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+gcloud compute instances create mpi-node03 --image mpi-image --machine-type n1-standard-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+gcloud compute instances create mpi-node04 --image mpi-image --machine-type n1-standard-4 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh
+
+ mpirun -f ~/host_file -n 11 -ppn 1 hostname
+
+
+#head-node:1
+mpi-node01:2
+mpi-node02:2
+mpi-node03:2
+mpi-node04:2
+mpi-node05:2
+mpi-node06:2
+mpi-node07:2
+mpi-node08:2
+mpi-node09:2
+mpi-node010:2
+mpi-node011:2
+mpi-node012:2
+mpi-node013:2
+mpi-node014:2
+mpi-node015:2
+mpi-node016:2
+
+gcloud compute instances delete mpi-node01 --zone europe-west1-c
+gcloud compute instances delete mpi-node02 --zone europe-west1-c
+gcloud compute instances delete mpi-node03 --zone europe-west1-c
+gcloud compute instances delete mpi-node04 --zone europe-west1-c
+
+gcloud compute instances create mpi-node01 --image mpi-image --machine-type n1-standard-4 --zone europe-west1-c --metadata-from-file startup-script=node-startup-script.sh
+
+for i in {1..16}; do echo mpi-node0$i:2; done
+
+for i in {1..11}; do gcloud compute instances delete mpi-node0$i --zone europe-west1-c; done
+
+for i in {1..16}; do gcloud compute instances create mpi-node0$i --image mpi-image --machine-type n1-standard-2 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh; done
+
+for i in {1..2}; do gcloud compute instances create mpi-node0$i --image mpi-image --machine-type n1-standard-16 --zone europe-west1-c --no-address --metadata-from-file startup-script=node-startup-script.sh; done

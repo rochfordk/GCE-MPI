@@ -1,0 +1,90 @@
+name: mpi-cluster
+modules:
+  mhead-node:
+    type: REPLICA_POOL
+    replicaPoolModule:
+      numReplicas: 1
+      replicaPoolParams:
+        v1beta1:
+          machineType: n1-standard-1
+          zone: europe-west1-a
+          baseInstanceName: head-node
+          disksToCreate:
+            - boot: true
+              autoDelete: true
+              initializeParams:
+                sourceImage: https://www.googleapis.com/compute/v1/projects/winged-vigil-677/global/images/mpi-node
+#                sourceImage: mpi-node
+                diskSizeGb: 10
+          initAction: configure-nfs-server
+          networkInterfaces:
+            - network: default
+              accessConfigs:
+                - name: External NAT
+                  type: ONE_TO_ONE_NAT
+#      envVariables:
+#        PORT:
+#          value: 8080
+#        VERSION:
+#          value: 10.2
+  mcompute-node:
+    type: REPLICA_POOL
+    replicaPoolModule:
+      numReplicas: 2
+      replicaPoolParams:
+        v1beta1:
+          machineType: n1-standard-1
+          zone: europe-west1-a
+          baseInstanceName: compute-node
+          disksToCreate:
+            - boot: true
+              autoDelete: true
+              initializeParams:
+                sourceImage: https://www.googleapis.com/compute/v1/projects/winged-vigil-677/global/images/mpi-node
+#                sourceImage: mpi-node
+                diskSizeGb: 10
+          initAction: 
+          networkInterfaces:
+            - network: default
+              accessConfigs:
+                - name: External NAT
+                  type: ONE_TO_ONE_NAT
+#      envVariables:
+#        PORT:
+#          value: 8080
+#        VERSION:
+#          value: 10.2
+actions:
+  configure-nfs-server:
+    commands: [
+#     Assuming mpiuser exists (add block to create if not)
+      "usermod -d /home/shared -m mpiuser",
+<<<<<<< HEAD
+      "touch /tmp/f1",
+      "runuser -l mpiuser -c 'ssh-keygen -t dsa -f /home/shared/.ssh/id_rsa -P \"\"'",
+      "touch /tmp/f2",
+=======
+      "runuser -l mpiuser -c 'ssh-keygen -t rsa -f /home/shared/.ssh/id_rsa -P \"\"'",
+>>>>>>> e2b560f46fc762512ec40412e4695628210e7e81
+      "runuser -l mpiuser -c 'cat /home/shared/.ssh/id_rsa.pub >> /home/shared/.ssh/authorized_keys'",
+      "touch /tmp/f3",
+      "chmod 700 /home/shared/.ssh",
+      "touch /tmp/f4",
+      "chmod 600 /home/shared/.ssh/authorized_keys",
+      "touch /tmp/f5",
+
+#      The wildcard below should be replaces with a subnet
+      #"sudo echo '/home/shared *(rw,sync)' | sudo tee -a /etc/exports",
+      #"touch /tmp/f6",
+      "/bin/systemctl start nfs.service",
+      "touch /tmp/f7",
+    ]
+
+#   configure-nfs-client:
+#     commands: [
+# #     Assuming mpiuser exists (add block to create if not)
+#       "sudo mkdir /home/shared",
+#       "sudo mount head-node-9c7z:/home/shared /home/shared",
+#       "usermod -f -d /home/shared -m mpiuser",
+#     ]
+
